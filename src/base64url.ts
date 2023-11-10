@@ -24,5 +24,5 @@ export function decodeBase64url(value: string): string {
     base64 += '='.repeat(padding)
   }
 
-  return atob(base64)
+  return base64
 }

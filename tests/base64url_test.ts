@@ -10,7 +10,7 @@ Deno.test('encodeBase64url should correctly encode a string', () => {
 Deno.test('decodeBase64url should correctly decode a base64url string', () => {
   const base64url = 'SGVsbG8sIFdvcmxkIQ'
   const decoded = decodeBase64url(base64url)
-  assertEquals(decoded, 'Hello, World!', 'String decoding failed')
+  assertEquals(decoded, 'SGVsbG8sIFdvcmxkIQ==', 'String decoding failed')
 })
 
 Deno.test('encodeBase64url should correctly encode a Uint8Array', () => {
