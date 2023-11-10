@@ -2,12 +2,12 @@ export function encodeBase64url(value: Uint8Array | string): string {
   let binaryString: string
 
   if (value instanceof Uint8Array) {
-    binaryString = btoa(String.fromCharCode(...value))
+    binaryString = String.fromCharCode(...value)
   } else {
     binaryString = value
   }
 
-  return binaryString
+  return btoa(binaryString)
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
     .replace(/=+$/, '')
@@ -24,5 +24,5 @@ export function decodeBase64url(value: string): string {
     base64 += '='.repeat(padding)
   }
 
-  return base64
+  return atob(base64)
 }
