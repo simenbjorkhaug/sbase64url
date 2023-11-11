@@ -207,10 +207,10 @@ export function decodeBase64(data: string): Uint8Array {
     adjustment = data.length - paddingIndex
   }
 
-  const bytes = new Uint8Array(data.length * 3 / 4)
+  const bytes = new Uint8Array(3 * (data.length / 4))
 
   for (let i = 0, j = 0; i < data.length; i += 4, j += 3) {
-    const byte_sequence = 0x00 |
+    const byte_sequence =
       base64codes[data.charAt(i) as keyof typeof base64codes] << 18 |
       base64codes[data.charAt(i + 1) as keyof typeof base64codes] << 12 |
       base64codes[data.charAt(i + 2) as keyof typeof base64codes] << 6 |
