@@ -5,7 +5,7 @@
  * @returns a String
  */
 export function decodeBinary(value: Uint8Array): string {
-  const decoder = new TextDecoder('utf-8')
+  const decoder = new TextDecoder()
   return decoder.decode(value)
 }
 

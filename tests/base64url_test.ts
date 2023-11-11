@@ -1,8 +1,10 @@
 import {
   decodeBase64,
   decodeBase64url,
+  decodeBinary,
   encodeBase64,
   encodeBase64url,
+  encodeBinary,
 } from '../mod.ts'
 import { assertEquals } from 'https://deno.land/std@0.205.0/assert/assert_equals.ts'
 
@@ -52,4 +54,16 @@ Deno.test('A string to base64 to base64url to base64 to string should be equal',
   const decodedBase64 = decodeBase64url(base64url)
   const decodedText = decodeBase64(decodedBase64)
   assertEquals(text, decodedText, 'Encoding and decoding failed')
+})
+
+Deno.test('A string to base64url to base64 to binary to base64 ti base64url to string should be equal', () => {
+  const text = 'Hello, World!'
+  const base64 = encodeBase64(text)
+  const base64url = encodeBase64url(base64)
+  const binary = encodeBinary(base64url)
+  const decodedBinary = decodeBinary(binary)
+  const decodedBase64url = decodeBase64url(decodedBinary)
+  const decodedBase64 = decodeBase64(decodedBase64url)
+
+  assertEquals(text, decodedBase64, 'Encoding and decoding failed')
 })

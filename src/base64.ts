@@ -1,5 +1,3 @@
-import { decodeBinary, encodeBinary } from './binary.ts'
-
 /**
  * Decodes a base64 string to a string
  *
@@ -7,15 +5,13 @@ import { decodeBinary, encodeBinary } from './binary.ts'
  * @returns a string
  */
 export function decodeBase64(value: string) {
-  const binary = atob(value)
+  let result = ''
 
-  const bytes = new Uint8Array(binary.length)
-
-  for (let i = 0; i < binary.length; i++) {
-    bytes[i] = binary.charCodeAt(i)
+  for (const char of atob(value).split('')) {
+    result += '%' + ('00' + char.charCodeAt(0).toString(16)).slice(-2)
   }
 
-  return decodeBinary(bytes)
+  return decodeURIComponent(result)
 }
 
 /**
@@ -25,12 +21,10 @@ export function decodeBase64(value: string) {
  * @returns a base64 string
  */
 export function encodeBase64(value: string): string {
-  const bytes = encodeBinary(value)
-
-  let binary = ''
-  for (let i = 0; i < bytes.byteLength; i++) {
-    binary += String.fromCharCode(bytes[i])
-  }
-
-  return btoa(binary)
+  return btoa(
+    encodeURIComponent(value).replace(
+      /%([0-9A-F]{2})/g,
+      (_, p1) => String.fromCharCode(parseInt(p1, 16)),
+    ),
+  )
 }
