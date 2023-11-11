@@ -1,12 +1,16 @@
+import { decodeBase64, encodeBase64 } from './base64.ts'
+
 /**
- * Accepts a base64 value and creates a base64url value
+ * Accepts a string value and creates a base64url value
  *
  * @param value - a base64 value
  *
  * @returns a base64url value
  */
-export function encodeBase64url(value: string): string {
-  return value
+export function encodeBase64url(
+  data: string | ArrayBuffer | Uint8Array,
+): string {
+  return encodeBase64(data)
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
     .replace(/=+$/, '')
@@ -19,16 +23,16 @@ export function encodeBase64url(value: string): string {
  *
  * @returns a base64 value
  */
-export function decodeBase64url(value: string): string {
-  let base64 = value
+export function decodeBase64url(value: string): Uint8Array {
+  let base64url = value
     .replace(/-/g, '+')
     .replace(/_/g, '/')
 
-  const padding = 4 - (base64.length % 4)
+  const padding = 4 - (base64url.length % 4)
 
   if (padding !== 4) {
-    base64 += '='.repeat(padding)
+    base64url += '='.repeat(padding)
   }
 
-  return base64
+  return decodeBase64(base64url)
 }
