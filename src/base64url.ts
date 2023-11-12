@@ -28,10 +28,10 @@ export function decodeBase64url(value: string): Uint8Array {
     .replace(/-/g, '+')
     .replace(/_/g, '/')
 
-  const padding = 4 - (base64url.length % 4)
+  const padding = base64url.length % 4
 
-  if (padding !== 4) {
-    base64url += '='.repeat(padding)
+  if (padding !== 0) {
+    base64url += '='.repeat(4 - padding)
   }
 
   return decodeBase64(base64url)
