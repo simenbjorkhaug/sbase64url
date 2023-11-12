@@ -197,7 +197,7 @@ export function decodeBase64(data: string): Uint8Array {
 
   let adjustment = 0
 
-  if (paddingIndex !== 1 && paddingIndex < data.length - 2) {
+  if (paddingIndex !== -1 && paddingIndex < data.length - 2) {
     throw new Error('Invalid base64 string')
   } else if (paddingIndex !== -1) {
     adjustment = data.length - paddingIndex
