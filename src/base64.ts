@@ -61,8 +61,8 @@ const Alphabet = [
   '7',
   '8',
   '9',
-  '_',
-  '-',
+  '+',
+  '/',
 ]
 
 const base64codes = {
@@ -166,20 +166,16 @@ export function encodeBase64(data: string | Uint8Array | ArrayBuffer): string {
   }
 
   if (i === bytes.length) {
-    const byte1 = bytes[bytes.length - 2]
-    const byte2 = bytes[bytes.length - 1]
-
-    binary_string += Alphabet[byte1 >> 2]
-    binary_string += Alphabet[((byte1 & 0x03) << 4) | (byte2 >> 4)]
-    binary_string += Alphabet[(byte2 & 0x0f) << 2]
+    binary_string += Alphabet[bytes[i - 2] >> 2]
+    binary_string +=
+      Alphabet[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)]
+    binary_string += Alphabet[(bytes[i - 1] & 0x0f) << 2]
     binary_string += '='
   }
 
   if (i === bytes.length + 1) {
-    const byte1 = bytes[bytes.length - 1]
-
-    binary_string += Alphabet[byte1 >> 2]
-    binary_string += Alphabet[(byte1 & 0x03) << 4]
+    binary_string += Alphabet[bytes[i - 2] >> 2]
+    binary_string += Alphabet[(bytes[i - 2] & 0x03) << 4]
     binary_string += '=='
   }
 
